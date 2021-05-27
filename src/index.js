@@ -11,6 +11,7 @@ const DelimiterType = {
   TimeDiff: '-->',
   Milli: ',',
   Stamp: ':',
+  TextTerminator: '',
 }
 
 function readInputFile(fileName, callback) {
@@ -33,7 +34,7 @@ function readInputFile(fileName, callback) {
       map[currentId].endTimeMs = toMilli(endTime);
       currentLineType = LineType.Text;
     } else if (LineType.Text === currentLineType) {
-      if (line.trim() === '') {
+      if (line.trim() === DelimiterType.TextTerminator) {
         currentLineType = LineType.Id;
       } else {
         const text = line;
@@ -58,7 +59,7 @@ function writeOutputFile(filePath, map) {
       `${toTimestamp(map[id].startTimeMs)} ${DelimiterType.TimeDiff} ${toTimestamp(map[id].endTimeMs)}`
     );
     fileLines.push(...map[id].lines);
-    fileLines.push('');
+    fileLines.push(DelimiterType.TextTerminator);
   });
   fs.writeFile(filePath, fileLines.join('\n'), error => {
     if (error) {
@@ -71,8 +72,8 @@ function writeOutputFile(filePath, map) {
 
 function toMilli(time) {
   //'00:02:35,728'
-  const [hrmmss, ms] = time.split(',');
-  const [hr, mm, ss] = hrmmss.split(':');
+  const [hrmmss, ms] = time.split(DelimiterType.Milli);
+  const [hr, mm, ss] = hrmmss.split(DelimiterType.Stamp);
   return Number(ms) + Number(ss) * 1_000 + Number(mm) * 60 * 1_000 + Number(hr) * 60 * 60 * 1_000;
 }
 
