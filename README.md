@@ -2,11 +2,6 @@ srt-shift
 =========
 Shift srt subtitle files by milliseconds.
 
-## Install
-```shell
-npm install
-```
-
 ## Test
 ```shell
 make test
@@ -26,3 +21,8 @@ Creates binary in bin/ directory.
 srt-shift -i sample.srt -o shifted.srt -s +4242
 ```
 
+## Install
+```shell
+make install
+```
+Will copy the file to your $HOME/bin if you have one created.
