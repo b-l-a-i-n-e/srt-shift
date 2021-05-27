@@ -1,8 +1,19 @@
-.PHONY: test
+.PHONY: all test clean
 
-test:
-	mkdir .test
-	./srt-shift -i sample.srt -o .test/sample-shifted.srt -s +120
-	./srt-shift -i .test/sample-shifted.srt -o .test/sample-shifted-back.srt -s -120
-	diff sample.srt .test/sample-shifted-back.srt
-	rm -rf .test
+all: bin/srt-shift
+
+clean:
+	rm -rf bin/
+	rm -rf dist/
+	rm -rf .test/
+
+dist/index.js:
+	npx ncc build src/cli.js -o dist/
+
+bin/srt-shift: dist/index.js
+	mkdir -p bin/
+	cp dist/index.js bin/srt-shift
+	chmod +x bin/srt-shift
+
+test: bin/srt-shift
+	./test.sh
