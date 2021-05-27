@@ -13,7 +13,7 @@ node_modules:
 dist/index.js: node_modules
 	npx ncc build src/cli.js -o dist/
 
-bin/srt-shift: node_modules dist/index.js
+bin/srt-shift: dist/index.js
 	mkdir -p bin/
 	cp dist/index.js bin/srt-shift
 	chmod +x bin/srt-shift
