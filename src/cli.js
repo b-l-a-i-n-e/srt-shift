@@ -5,7 +5,7 @@ const {readInputFile, writeOutputFile} = require('./index.js');
 
 function getHelp() {
   return `
-usage: srt-shift [-i <path>] [-o <path>]
+usage: srt-shift [-i <path>] [-o <path>] [-s {+|-}<milliseconds> ]
 
 -i, --input\tinput file
 -o, --output\toutput file
